@@ -1,22 +1,15 @@
 import { ref } from "vue";
+import { OrderingDomainModel } from "@/modules/order/core/model/Ordering.domain-model";
+import { GuestForm } from "@/modules/order/core/form/guest.form";
 
-type Guest = {
-    id: string;
-    firstName: string;
-    lastName: string;
-    age: number;
-}
 
 export const useGuestSection = () => {
-    const guests = ref<Guest[]>([]);
+    const guests = ref<OrderingDomainModel.Guest[]>([]);
+    const guestForm = new GuestForm();
 
     function addGuest() {
-        guests.value.push({
-            id: Math.random().toString(),
-            firstName: "",
-            lastName: "",
-            age: 0
-        });
+        const newState = guestForm.addGuest(guests.value);
+        guests.value = newState;
     }
 
     function removeGuest(id: string) {
